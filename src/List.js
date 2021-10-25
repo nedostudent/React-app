@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ListItemFun from './ListItemFun.js'
 
 class List extends Component {
   constructor(props) {
@@ -24,12 +25,13 @@ class List extends Component {
     });
   };
   onRemoveItem = i => {
+      if(this.state.count > 0){
     this.setState(state => {
       const list = state.list.filter((item, j) => i !== j);
       const count = state.count - 1;
       const countDel = state.countDel + 1;
       return {list, count, countDel};
-    });
+  });}
   };
 
   render() {
@@ -45,18 +47,11 @@ class List extends Component {
          Всего было удалено = {this.state.countDel}
         </div>
           <div>
-            <ul >
-              {this.state.list.map((item, index) => (
-                <li key={index} >
-                  {item}
-                  <button
-                    type='button'
-                    onClick={this.onRemoveItem.bind(this, index)}
-                    style={{margin: '10px'}}>
-                        Удалить
-                  </button>
-                </li>
-              ))}
+            <ul>
+              {this.state.list.map((item, index) =>
+                  <li key={(index).toString()}>
+                        <ListItemFun item={item}/>
+                 </li>)}
             </ul>
           </div>
             <div>
@@ -72,6 +67,15 @@ class List extends Component {
                   disabled={!this.state.value}>
                     Добавить
                 </button>
+                <button
+                    type="button"
+                    onClick={() => this.onRemoveItem(this.state.count-1)}
+                    style={{
+                        margin: '10px',
+                    }}
+                  >
+                    Удалить
+                  </button>
             </div>
       </div>
     );
