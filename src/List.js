@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import ListItemFun from './ListItemFun.js'
 
-class List extends Component {
+export default class List extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       list: [],
       value: '',
@@ -13,9 +12,11 @@ class List extends Component {
       countDel: 0
     };
   }
+
   onChangeValue = e => {
     this.setState({ value: e.target.value });
   };
+
   onAddItem = () => {
     this.setState(state => {
       const list = [...state.list, state.value];
@@ -24,6 +25,7 @@ class List extends Component {
       return {list, value: '', count, countAdd};
     });
   };
+
   onRemoveItem = i => {
       if(this.state.count > 0){
     this.setState(state => {
@@ -33,7 +35,7 @@ class List extends Component {
       return {list, count, countDel};
   });}
   };
-
+  
   render() {
     return (
       <div>
@@ -81,5 +83,3 @@ class List extends Component {
     );
   }
 }
-
-export default List;
