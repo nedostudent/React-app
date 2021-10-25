@@ -12,29 +12,24 @@ class List extends Component {
       countDel: 0
     };
   }
-  onChangeValue = event => {
-    this.setState({ value: event.target.value });
+  onChangeValue = e => {
+    this.setState({ value: e.target.value });
   };
   onAddItem = () => {
     this.setState(state => {
       const list = [...state.list, state.value];
-
-      return {
-        list,
-        value: '',
-    };
+      const count = state.count + 1;
+      const countAdd = state.countAdd + 1;
+      return {list, value: '', count, countAdd};
     });
-    this.setState(prevState => ({count: prevState.count + 1, countAdd: prevState.countAdd + 1}))
   };
   onRemoveItem = i => {
     this.setState(state => {
       const list = state.list.filter((item, j) => i !== j);
-
-      return {
-        list,
-      };
+      const count = state.count - 1;
+      const countDel = state.countDel + 1;
+      return {list, count, countDel};
     });
-    this.setState(prevState => ({count: prevState.count - 1, countDel: prevState.countDel + 1}))
   };
 
   render() {
@@ -52,16 +47,13 @@ class List extends Component {
           <div>
             <ul >
               {this.state.list.map((item, index) => (
-                <li key={item, index} >
+                <li key={index} >
                   {item}
                   <button
-                    type="button"
-                    onClick={() => this.onRemoveItem(index)}
-                    style={{
-                        margin: '10px',
-                    }}
-                  >
-                    Удалить
+                    type='button'
+                    onClick={this.onRemoveItem.bind(this, index)}
+                    style={{margin: '10px'}}>
+                        Удалить
                   </button>
                 </li>
               ))}
@@ -69,19 +61,15 @@ class List extends Component {
           </div>
             <div>
                 <input
-                  type="text"
-                  placeholder="Введите текст"
+                  type='text'
+                  placeholder='Введите текст'
                   value={this.state.value}
                   onChange={this.onChangeValue}
-                  style={{
-                      margin: '20px',
-                  }}
-                />
+                  style={{margin: '20px'}}/>
                 <button
-                  type="button"
+                  type='button'
                   onClick={this.onAddItem}
-                  disabled={!this.state.value}
-                >
+                  disabled={!this.state.value}>
                     Добавить
                 </button>
             </div>
