@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import ListItemFun from './ListItemFun.js';
-import { v4 as uuidv4 } from 'uuid';
 
 export default class List extends Component {
   constructor(props) {
     super(props);
+    this.getIds = this.getIds.bind(this);
     this.state = {
-      list: [],
+      list: [{id:"1",title:"example"}],
+      countIds: 2,
       value: '',
-      count: 0,
+      count: 1,
       countAdd: 0,
       countDel: 0
     };
@@ -17,13 +18,17 @@ export default class List extends Component {
   onChangeValue = e => {
     this.setState({ value: e.target.value });
   };
-
+getIds = i => {
+    this.setState(prevState => ({countIds: prevState.countIds + 1}))
+    return (this.state.countIds)
+}
   onAddItem = () => {
     this.setState(state => {
-      const list = [...state.list, state.value];
+      const list = [...state.list, {id:state.countIds, title:state.value}];
+      const countIds = state.countIds + 1;
       const count = state.count + 1;
       const countAdd = state.countAdd + 1;
-      return {list, value: '', count, countAdd};
+      return {list, value: '', count, countAdd, countIds};
     });
   };
 
@@ -51,9 +56,9 @@ export default class List extends Component {
         </div>
           <div>
             <ul>
-              {this.state.list.map((item) =>
-                  <li key={uuidv4()}>
-                        <ListItemFun item={item}/>
+              {this.state.list.map(elem =>
+                  <li key={elem.id}>
+                        <ListItemFun item={elem.title}/>
                  </li>)}
             </ul>
           </div>
