@@ -4,7 +4,6 @@ import ListItemFun from './ListItemFun.js';
 export default class List extends Component {
   constructor(props) {
     super(props);
-    this.getIds = this.getIds.bind(this);
     this.state = {
       list: [{id:"1",title:"example"}],
       countIds: 2,
@@ -18,10 +17,6 @@ export default class List extends Component {
   onChangeValue = e => {
     this.setState({ value: e.target.value });
   };
-getIds = i => {
-    this.setState(prevState => ({countIds: prevState.countIds + 1}))
-    return (this.state.countIds)
-}
   onAddItem = () => {
     this.setState(state => {
       const list = [...state.list, {id:state.countIds, title:state.value}];
