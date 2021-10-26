@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ListItemFun from './ListItemFun.js'
+import ListItemFun from './ListItemFun.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default class List extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ export default class List extends Component {
       return {list, count, countDel};
   });}
   };
-  
+
   render() {
     return (
       <div>
@@ -50,8 +51,8 @@ export default class List extends Component {
         </div>
           <div>
             <ul>
-              {this.state.list.map((item, index) =>
-                  <li key={(index).toString()}>
+              {this.state.list.map((item) =>
+                  <li key={uuidv4()}>
                         <ListItemFun item={item}/>
                  </li>)}
             </ul>
@@ -62,7 +63,8 @@ export default class List extends Component {
                   placeholder='Введите текст'
                   value={this.state.value}
                   onChange={this.onChangeValue}
-                  style={{margin: '20px'}}/>
+                  style={{margin: '20px'}}
+                  />
                 <button
                   type='button'
                   onClick={this.onAddItem}
@@ -72,10 +74,8 @@ export default class List extends Component {
                 <button
                     type="button"
                     onClick={() => this.onRemoveItem(this.state.count-1)}
-                    style={{
-                        margin: '10px',
-                    }}
-                  >
+                    style={{margin: '10px'}}
+                    >
                     Удалить
                   </button>
             </div>
